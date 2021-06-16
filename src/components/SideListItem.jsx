@@ -1,8 +1,6 @@
-export default function SideListItem({
-  isSelectedCripto,
-  selectCripto,
-  item: { id, name }
-}) {
+export default function SideListItem({ isSelectedCripto, selectCripto, item }) {
+  const { id, name } = item;
+
   return (
     <li key={id}>
       <button

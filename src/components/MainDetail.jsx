@@ -16,15 +16,24 @@ function convertToSeconds(dateValue) {
     : dateValue;
 }
 
-export default function MainDetail() {
+export default function MainDetail({ coin, selectedCripto }) {
   return (
     <>
       <section className="main-detail__central">
         <div className="main-detail__update">
-          {/* This part is for the challenge */}
+          {/* <!-- Leave this section in for the challenge --> */}
         </div>
-        <div className="main-detail__name"></div>
-        <div className="main-detail__price"></div>
+        <div className="main-detail__name">
+          <h2>{coin.name}</h2>
+          <p>
+            <span className="small">a.k.a </span>
+            {coin.symbol}
+          </p>
+        </div>
+        <div className="main-detail__price">
+          <p>{coin.price}</p>
+          <p>Updated 1191 seconds ago</p>
+        </div>
       </section>
     </>
   );
