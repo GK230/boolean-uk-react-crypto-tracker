@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getCriptoUpdateUrl } from "../constants";
 
 // This function give us the current time in seconds
-function currentTime() {
+function getCurrentTime() {
   return Math.round(Date.now() / 1000);
 }
 
@@ -16,7 +16,18 @@ function convertToSeconds(dateValue) {
     : dateValue;
 }
 
-export default function MainDetail({ coin, selectedCripto }) {
+export default function MainDetail({ coin }) {
+  const { symbol, name, current_price, last_updated } = coin
+  const [currentTime, setCurrentTime] = useState(getCurrentTime())
+
+  const updatedTimeAgo = currentTime - convertToSeconds(last_updated)
+
+  useEffect(() => {
+    const intervalId = setInterval(() => setCurrentTime(getCurrentTime()), 1000)
+    return () => {
+      clearInterval(intervalId)
+    }
+  }, [])
   return (
     <>
       <section className="main-detail__central">
@@ -24,15 +35,15 @@ export default function MainDetail({ coin, selectedCripto }) {
           {/* <!-- Leave this section in for the challenge --> */}
         </div>
         <div className="main-detail__name">
-          <h2>{coin.name}</h2>
+          <h2>{name}</h2>
           <p>
             <span className="small">a.k.a </span>
-            {coin.symbol}
+            {symbol}
           </p>
         </div>
         <div className="main-detail__price">
-          <p>{coin.price}</p>
-          <p>Updated 1191 seconds ago</p>
+          <p>{current_price}</p>
+          <p>Updated {updatedTimeAgo} seconds ago</p>
         </div>
       </section>
     </>
