@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getCriptoUpdateUrl } from "../constants";
+import { getPrice } from "../api";
 
 // This function give us the current time in seconds
 function getCurrentTime() {
@@ -17,8 +17,9 @@ function convertToSeconds(dateValue) {
 }
 
 export default function MainDetail({ coin }) {
-  const { symbol, name, current_price, last_updated } = coin
+  const { id, symbol, name, current_price, last_updated } = coin
   const [currentTime, setCurrentTime] = useState(getCurrentTime())
+  const [price, setPrice] = useState({})
 
   const updatedTimeAgo = currentTime - convertToSeconds(last_updated)
 
@@ -28,6 +29,14 @@ export default function MainDetail({ coin }) {
       clearInterval(intervalId)
     }
   }, [])
+
+  useEffect(() => {
+    getPrice(id).then((new_price) => setPrice(new_price));
+  }, []);
+
+  console.log(price)
+
+
   return (
     <>
       <section className="main-detail__central">
@@ -42,7 +51,7 @@ export default function MainDetail({ coin }) {
           </p>
         </div>
         <div className="main-detail__price">
-          <p>{current_price}</p>
+          <p>{price.gbp}</p>
           <p>Updated {updatedTimeAgo} seconds ago</p>
         </div>
       </section>

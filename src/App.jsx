@@ -9,7 +9,7 @@ function App() {
   // This piece of state keeps the id from the selected coin to be displayed in the MainDetail component
   const [selectedCripto, setSelectedCripto] = useState(null);
   const [criptoCoins, setCriptoCoins] = useState([]);
-  const [criptoNews, setCriptoNews] = useState();
+  const [criptoNews, setCriptoNews] = useState([]);
 
   // This function gives you whether a coin has been selected or not
   // You will need this for the SideListItem component
@@ -26,8 +26,6 @@ function App() {
   useEffect(() => {
     getNews().then((news) => setCriptoNews(news["status_updates"]));
   }, []);
-
-  console.log(criptoNews);
 
   return (
     /* These (<> </>) are called React Fragments, and allow us to return more than one top element */
@@ -46,9 +44,9 @@ function App() {
         ) : (
           "Select a coin bro!"
         )}
-        {/* News feed component needs to go here */}
+        {<NewsFeedSection criptoNews={criptoNews} />
+}
       </main>
-      <NewsFeedSection criptoNews={criptoNews} />
     </>
   );
 }
