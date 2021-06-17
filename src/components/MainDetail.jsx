@@ -19,7 +19,7 @@ function convertToSeconds(dateValue) {
 export default function MainDetail({ coin }) {
   const { id, symbol, name, current_price, last_updated } = coin
   const [currentTime, setCurrentTime] = useState(getCurrentTime())
-  const [price, setPrice] = useState({})
+  const [priceOfSelected, setPriceOfSelected] = useState({})
 
   const updatedTimeAgo = currentTime - convertToSeconds(last_updated)
 
@@ -31,10 +31,10 @@ export default function MainDetail({ coin }) {
   }, [])
 
   useEffect(() => {
-    getPrice(id).then((new_price) => setPrice(new_price));
+    getPrice(id).then((new_price) => setPriceOfSelected(new_price));
   }, []);
 
-  console.log(price)
+  console.log(priceOfSelected)
 
 
   return (
@@ -51,7 +51,7 @@ export default function MainDetail({ coin }) {
           </p>
         </div>
         <div className="main-detail__price">
-          <p>{price.gbp}</p>
+          <p>{current_price}</p>
           <p>Updated {updatedTimeAgo} seconds ago</p>
         </div>
       </section>
